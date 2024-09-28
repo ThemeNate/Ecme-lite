@@ -1,0 +1,63 @@
+.dropdown {
+  @apply relative inline-block;
+}
+
+.dropdown-menu {
+  @apply rounded-2xl bg-white dark:bg-gray-900 ring-0 shadow-[0px_48px_64px_-16px_rgba(0,0,0,0.25)] border border-gray-100 dark:border-gray-800 focus:outline-none p-3 z-30 outline-none;
+
+  &.top-start {
+    @apply ltr:left-0 rtl:right-0 bottom-full origin-bottom;
+  }
+
+  &.top-center {
+    @apply bottom-full left-1/2 origin-bottom;
+  }
+
+  &.top-end {
+    @apply ltr:right-0 rtl:left-0 bottom-full origin-bottom;
+  }
+
+  &.bottom-start {
+    @apply ltr:left-0 rtl:right-0 top-full origin-top;
+  }
+
+  &.bottom-center {
+    @apply left-1/2 top-full origin-top;
+  }
+
+  &.bottom-end {
+    @apply ltr:right-0 rtl:left-0 top-full origin-top;
+  }
+
+  &.middle-start-top {
+    @apply left-full top-0 origin-top;
+  }
+
+  &.middle-start-bottom {
+    @apply left-full bottom-0 origin-bottom;
+  }
+
+  &.middle-end-top {
+    @apply right-full top-0 origin-top;
+  }
+
+  &.middle-end-bottom {
+    @apply right-full bottom-0 origin-bottom;
+  }
+}
+
+.dropdown-toggle-default {
+  @apply cursor-pointer p-2 inline-block font-semibold;
+
+  &.dropdown-toggle-disabled {
+    @apply opacity-60;
+  }
+}
+
+.dropdown-submenu-item {
+  @apply justify-between;
+}
+
+.dropdown-toggle-disabled {
+  @apply cursor-not-allowed;
+}
