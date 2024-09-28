@@ -19,7 +19,7 @@ const AxiosRequestIntrceptorConfigCallback = (
         }
 
         if (storage === 'sessionStorage') {
-            accessToken = localStorage.getItem(TOKEN_NAME_IN_STORAGE) || ''
+            accessToken = sessionStorage.getItem(TOKEN_NAME_IN_STORAGE) || ''
         }
 
         if (accessToken) {
