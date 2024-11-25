@@ -31,7 +31,7 @@ export const SignUpBase = ({
             </div>
             {message && (
                 <Alert showIcon className="mb-4" type="danger">
-                    {message}
+                    <span className="break-all">{message}</span>
                 </Alert>
             )}
             <SignUpForm disableSubmit={disableSubmit} setMessage={setMessage} />

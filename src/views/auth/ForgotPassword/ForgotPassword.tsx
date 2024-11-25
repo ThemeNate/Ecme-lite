@@ -44,7 +44,7 @@ export const ForgotPasswordBase = ({
             </div>
             {message && (
                 <Alert showIcon className="mb-4" type="danger">
-                    {message}
+                    <span className="break-all">{message}</span>
                 </Alert>
             )}
             <ForgotPasswordForm
