@@ -1,4 +1,3 @@
-import { forwardRef } from 'react'
 import classNames from 'classnames'
 import {
     TbChevronDown,
@@ -8,7 +7,7 @@ import {
 } from 'react-icons/tb'
 import type { CommonProps } from '../@types/common'
 import type { Placement } from '@floating-ui/react'
-import type { ReactNode, HTMLProps } from 'react'
+import type { ReactNode, HTMLProps, Ref } from 'react'
 
 export interface DropdownToggleSharedProps {
     renderTitle?: ReactNode
@@ -19,6 +18,7 @@ export interface DropdownToggleSharedProps {
 
 interface DropdownToggleProps extends CommonProps, DropdownToggleSharedProps {
     id?: string
+    ref?: Ref<HTMLDivElement>
 }
 
 const DropdownToggleDefaultContent = ({
@@ -63,16 +63,16 @@ const DropdownToggleDefaultContent = ({
     )
 }
 
-const DropdownToggle = forwardRef<
-    HTMLDivElement,
-    DropdownToggleProps & HTMLProps<HTMLDivElement>
->((props, ref) => {
+const DropdownToggle = (
+    props: DropdownToggleProps & HTMLProps<HTMLDivElement>,
+) => {
     const {
         className,
         renderTitle,
         children,
         placement = 'bottom-start',
         disabled,
+        ref,
         toggleClassName,
         ...rest
     } = props
@@ -109,8 +109,6 @@ const DropdownToggle = forwardRef<
             </span>
         </div>
     )
-})
-
-DropdownToggle.displayName = 'DropdownToggle'
+}
 
 export default DropdownToggle

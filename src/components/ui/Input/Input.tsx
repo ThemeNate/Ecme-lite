@@ -1,4 +1,4 @@
-import { forwardRef, useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import { useConfig } from '../ConfigProvider'
 import { useForm, useFormItem } from '../Form/context'
@@ -12,6 +12,7 @@ import type {
     ReactNode,
     HTMLInputTypeAttribute,
     ClassAttributes,
+    Ref,
 } from 'react'
 
 export interface InputProps
@@ -25,6 +26,7 @@ export interface InputProps
     invalid?: boolean
     prefix?: string | ReactNode
     rows?: number
+    ref?: Ref<ElementType | HTMLInputElement | HTMLTextAreaElement>
     size?: TypeAttributes.ControlSize
     suffix?: string | ReactNode
     textArea?: boolean
@@ -32,10 +34,7 @@ export interface InputProps
     unstyle?: boolean
 }
 
-const Input = forwardRef<
-    ElementType | HTMLInputElement | HTMLTextAreaElement,
-    InputProps
->((props, ref) => {
+const Input = (props: InputProps) => {
     const {
         asElement: Component = 'input',
         className,
@@ -46,6 +45,7 @@ const Input = forwardRef<
         suffix,
         textArea,
         type = 'text',
+        ref,
         rows,
         style,
         unstyle = false,
@@ -208,8 +208,6 @@ const Input = forwardRef<
     }
 
     return renderChildren()
-})
-
-Input.displayName = 'Input'
+}
 
 export default Input

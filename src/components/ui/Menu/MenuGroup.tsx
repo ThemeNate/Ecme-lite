@@ -2,7 +2,6 @@ import { useContext } from 'react'
 import classNames from 'classnames'
 import { GroupContextProvider } from './context/groupContext'
 import MenuContext from './context/menuContext'
-import useUniqueId from '../hooks/useUniqueId'
 import type { CommonProps } from '../@types/common'
 import type { ReactNode } from 'react'
 
@@ -18,19 +17,10 @@ const MenuGroup = (props: MenuGroupProps) => {
     const menuGroupDefaultClass = 'menu-group'
     const menuGroupClass = classNames(menuGroupDefaultClass, className)
 
-    const entityHeaderId = useUniqueId('entity-header-')
-
     return (
         <div className={menuGroupClass}>
             {label && !sideCollapsed && (
-                <div
-                    className={classNames(
-                        'menu-title',
-                    )}
-                    id={entityHeaderId}
-                >
-                    {label}
-                </div>
+                <div className={classNames('menu-title')}>{label}</div>
             )}
             <GroupContextProvider value={null}>
                 <ul>{children}</ul>

@@ -1,24 +1,26 @@
-import { useState, useEffect, useRef, forwardRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import useMergedRef from '../hooks/useMergeRef'
 import classNames from 'classnames'
 import type { CommonProps, TypeAttributes } from '../@types/common'
-import type { ReactNode } from 'react'
+import type { ReactNode, Ref } from 'react'
 
 export interface AvatarProps extends CommonProps {
     alt?: string
     icon?: ReactNode
     onClick?: () => void
+    ref?: Ref<HTMLSpanElement>
     size?: 'lg' | 'md' | 'sm' | number
     shape?: Exclude<TypeAttributes.Shape, 'none'> | 'square'
     src?: string
     srcSet?: string
 }
 
-const Avatar = forwardRef<HTMLSpanElement, AvatarProps>((props, ref) => {
+const Avatar = (props: AvatarProps) => {
     const {
         alt,
         className,
         icon,
+        ref = null,
         shape = 'circle',
         size = 'md',
         src,
@@ -121,8 +123,6 @@ const Avatar = forwardRef<HTMLSpanElement, AvatarProps>((props, ref) => {
             {children}
         </span>
     )
-})
-
-Avatar.displayName = 'Avatar'
+}
 
 export default Avatar

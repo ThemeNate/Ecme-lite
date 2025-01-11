@@ -3,7 +3,7 @@ import type { ElementType, ComponentPropsWithRef } from 'react'
 
 type VerticalMenuIconProps = {
     icon: string
-    gutter: string
+    gutter?: string
 }
 
 export const Icon = <T extends ElementType>({
