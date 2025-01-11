@@ -2,6 +2,7 @@ import { useState, useEffect, Fragment } from 'react'
 import Menu from '@/components/ui/Menu'
 import VerticalSingleMenuItem from './VerticalSingleMenuItem'
 import VerticalCollapsedMenuItem from './VerticalCollapsedMenuItem'
+import AuthorityCheck from '@/components/shared/AuthorityCheck'
 import { themeConfig } from '@/configs/theme.config'
 import {
     NAV_ITEM_TYPE_TITLE,
@@ -44,10 +45,9 @@ const VerticalMenuContent = (props: VerticalMenuContentProps) => {
     const { activedRoute } = useMenuActive(navigationTree, routeKey)
 
     useEffect(() => {
-        if (defaulExpandKey.length === 0 && activedRoute?.parentKey) {
+        if (activedRoute?.parentKey) {
             setDefaulExpandKey([activedRoute?.parentKey])
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activedRoute?.parentKey])
 
     const handleLinkClick = () => {
@@ -68,6 +68,8 @@ const VerticalMenuContent = (props: VerticalMenuContentProps) => {
                         {nav.type === NAV_ITEM_TYPE_ITEM && (
                             <VerticalSingleMenuItem
                                 key={nav.key}
+                                currentKey={activedRoute?.key}
+                                parentKeys={defaulExpandKey}
                                 nav={nav}
                                 sideCollapsed={collapsed}
                                 direction={direction}
@@ -85,6 +87,8 @@ const VerticalMenuContent = (props: VerticalMenuContentProps) => {
                         {nav.type === NAV_ITEM_TYPE_COLLAPSE && (
                             <VerticalCollapsedMenuItem
                                 key={nav.key}
+                                currentKey={activedRoute?.key}
+                                parentKeys={defaulExpandKey}
                                 nav={nav}
                                 sideCollapsed={collapsed}
                                 direction={direction}
@@ -105,18 +109,20 @@ const VerticalMenuContent = (props: VerticalMenuContentProps) => {
                             </VerticalCollapsedMenuItem>
                         )}
                         {nav.type === NAV_ITEM_TYPE_TITLE && (
-                            <MenuGroup
-                                key={nav.key}
-                                label={t(nav.translateKey) || nav.title}
-                            >
-                                {nav.subMenu &&
-                                    nav.subMenu.length > 0 &&
-                                    renderNavigation(
-                                        nav.subMenu,
-                                        cascade,
-                                        false,
-                                    )}
-                            </MenuGroup>
+                            <AuthorityCheck userAuthority={userAuthority} authority={nav.authority}>
+                                <MenuGroup
+                                    key={nav.key}
+                                    label={t(nav.translateKey) || nav.title}
+                                >
+                                    {nav.subMenu &&
+                                        nav.subMenu.length > 0 &&
+                                        renderNavigation(
+                                            nav.subMenu,
+                                            cascade,
+                                            false,
+                                        )}
+                                </MenuGroup>
+                            </AuthorityCheck>
                         )}
                     </Fragment>
                 ))}

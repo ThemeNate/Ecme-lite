@@ -34,11 +34,8 @@ const MenuCollapse = (props: MenuCollapseProps) => {
 
     const [isExpanded, setIsExpanded] = useState(expanded)
 
-    const {
-        sideCollapsed,
-        defaultExpandedKeys,
-        defaultCollapseActiveKeys,
-    } = useContext(MenuContext)
+    const { sideCollapsed, defaultExpandedKeys, defaultCollapseActiveKeys } =
+        useContext(MenuContext)
 
     const { direction } = useConfig()
 

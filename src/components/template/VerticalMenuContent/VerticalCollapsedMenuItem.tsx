@@ -18,6 +18,8 @@ interface DefaultItemProps extends CommonProps {
 interface CollapsedItemProps extends DefaultItemProps {
     direction: Direction
     renderAsIcon?: boolean
+    currentKey?: string
+    parentKeys?: string[]
 }
 
 interface VerticalCollapsedMenuItemProps extends CollapsedItemProps {
@@ -62,9 +64,10 @@ const CollapsedItem = ({
     t,
     renderAsIcon,
     userAuthority,
+    parentKeys,
 }: CollapsedItemProps) => {
     const menuItem = (
-        <MenuItem key={nav.key} eventKey={nav.key} className="mb-2">
+        <MenuItem key={nav.key} isActive={parentKeys?.includes(nav.key)} eventKey={nav.key} className="mb-2">
             <VerticalMenuIcon icon={nav.icon} />
         </MenuItem>
     )
