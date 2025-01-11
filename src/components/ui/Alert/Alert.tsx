@@ -1,5 +1,5 @@
-import { useState, forwardRef } from 'react'
-import classNames from 'classnames'
+import { useState } from 'react'
+import classNames from '../utils/classNames'
 import useTimeout from '../hooks/useTimeout'
 import {
     HiCheckCircle,
@@ -11,7 +11,7 @@ import { motion } from 'framer-motion'
 import CloseButton from '../CloseButton'
 import StatusIcon from '../StatusIcon'
 import type { TypeAttributes, CommonProps } from '../@types/common'
-import type { ReactNode, MouseEvent } from 'react'
+import type { ReactNode, MouseEvent, Ref } from 'react'
 
 export interface AlertProps extends CommonProps {
     closable?: boolean
@@ -23,6 +23,7 @@ export interface AlertProps extends CommonProps {
     showIcon?: boolean
     triggerByToast?: boolean
     type?: TypeAttributes.Status
+    ref?: Ref<HTMLDivElement>
 }
 
 const DEFAULT_TYPE = 'warning'
@@ -65,7 +66,7 @@ const TYPE_ARRAY: TypeAttributes.Status[] = [
     'warning',
 ]
 
-const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
+const Alert = (props: AlertProps) => {
     const {
         children,
         className,
@@ -75,6 +76,7 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
         duration = 3000,
         title = null,
         onClose,
+        ref,
         showIcon = false,
         triggerByToast = false,
         ...rest
@@ -163,8 +165,8 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
             <div
                 className={classNames(
                     'flex gap-2',
-                    !title && children && 'items-center',
-                    title && children && 'mt-0.5',
+                    !title && children ? 'items-center' : '',
+                    title && children ? 'mt-0.5' : '',
                 )}
             >
                 {showIcon && (
@@ -191,8 +193,6 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
             {closable ? renderClose() : null}
         </motion.div>
     )
-})
-
-Alert.displayName = 'Alert'
+}
 
 export default Alert

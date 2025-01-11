@@ -1,11 +1,10 @@
-import { forwardRef } from 'react'
 import classNames from '../utils/classNames'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useForm, FormItemContextProvider } from './context'
 import { useConfig } from '../ConfigProvider'
 import { CONTROL_SIZES, LAYOUT } from '../utils/constants'
 import type { CommonProps, TypeAttributes } from '../@types/common'
-import type { ReactNode } from 'react'
+import type { ReactNode, Ref } from 'react'
 
 export interface FormItemProps extends CommonProps {
     asterisk?: boolean
@@ -17,10 +16,11 @@ export interface FormItemProps extends CommonProps {
     labelClass?: string
     labelWidth?: string | number
     layout?: TypeAttributes.FormLayout
+    ref?: Ref<HTMLDivElement>
     size?: TypeAttributes.ControlSize
 }
 
-const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) => {
+const FormItem = (props: FormItemProps) => {
     const {
         asterisk,
         children,
@@ -33,6 +33,7 @@ const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) => {
         labelClass,
         labelWidth,
         layout,
+        ref,
         style,
         size,
     } = props
@@ -130,8 +131,6 @@ const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) => {
             </div>
         </FormItemContextProvider>
     )
-})
-
-FormItem.displayName = 'FormItem'
+}
 
 export default FormItem

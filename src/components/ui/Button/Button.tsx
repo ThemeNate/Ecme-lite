@@ -1,4 +1,3 @@
-import { forwardRef } from 'react'
 import classNames from '../utils/classNames'
 import { useConfig } from '../ConfigProvider'
 import { useForm } from '../Form/context'
@@ -28,6 +27,7 @@ export interface ButtonProps
     icon?: string | ReactNode
     loading?: boolean
     onClick?: (e: MouseEvent<HTMLButtonElement>) => void
+    ref?: React.Ref<HTMLButtonElement>
     shape?: TypeAttributes.Shape
     size?: TypeAttributes.Size
     variant?: 'solid' | 'plain' | 'default'
@@ -47,7 +47,7 @@ const radiusShape: Record<TypeAttributes.Shape, string> = {
     none: 'rounded-none',
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+const Button = (props: ButtonProps) => {
     const {
         asElement: Component = 'button',
         active = false,
@@ -59,6 +59,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
         disabled,
         icon,
         loading = false,
+        ref,
         shape = 'round',
         size,
         variant = 'default',
@@ -132,9 +133,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
 
     const plainColor = () => {
         const btn = {
-            bgColor: active
-                ? ``
-                : `dark:primary-mild dark:bg-opacity-20`,
+            bgColor: active ? `` : `dark:primary-mild dark:bg-opacity-20`,
             textColor: ``,
             hoverColor: active ? '' : `hover:text-primary-mild`,
             activeColor: `dark:active:primary-mild dark:active:bg-opacity-40`,
@@ -247,8 +246,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
             {renderChildren()}
         </Component>
     )
-})
-
-Button.displayName = 'Button'
+}
 
 export default Button
