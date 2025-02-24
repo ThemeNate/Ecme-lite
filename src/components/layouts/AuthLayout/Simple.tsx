@@ -16,7 +16,6 @@ const Simple = ({ children, content, ...rest }: SimpleProps) => {
                         {content}
                         {children
                             ? cloneElement(children as ReactElement, {
-                                  contentClassName: 'text-center',
                                   ...rest,
                               })
                             : null}
