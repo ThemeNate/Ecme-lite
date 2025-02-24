@@ -122,7 +122,7 @@ const Alert = (props: AlertProps) => {
                 {customClose || (
                     <CloseButton
                         resetDefaultClass
-                        className="text-lg outline-none"
+                        className="text-lg outline-hidden"
                     />
                 )}
             </div>

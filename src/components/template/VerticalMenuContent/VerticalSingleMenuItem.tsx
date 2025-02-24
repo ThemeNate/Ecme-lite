@@ -63,7 +63,7 @@ const CollapsedItem = ({
                 <Dropdown.Item active={currentKey === nav.key}>
                     {nav.path ? (
                         <Link
-                            className="h-full w-full flex items-center outline-none"
+                            className="h-full w-full flex items-center outline-hidden"
                             to={nav.path}
                             target={nav.isExternalLink ? '_blank' : ''}
                             onClick={() =>
