@@ -272,7 +272,7 @@ const DropdownMenu = (props: DropdownMenuProps & HTMLProps<HTMLElement>) => {
                     data-open={isOpen ? '' : undefined}
                     data-nested={''}
                     data-focus-inside={hasFocusInside ? '' : undefined}
-                    className={classNames(toggleClassName, 'outline-none')}
+                    className={classNames(toggleClassName, 'outline-hidden')}
                     {...toggleProps}
                 >
                     <DropdownSubItem>
@@ -302,7 +302,7 @@ const DropdownMenu = (props: DropdownMenuProps & HTMLProps<HTMLElement>) => {
                                     ref={refs.setFloating}
                                     style={floatingStyles}
                                     {...getFloatingProps()}
-                                    className="outline-none z-30"
+                                    className="outline-hidden z-30"
                                 >
                                     <ul
                                         className={classNames(
