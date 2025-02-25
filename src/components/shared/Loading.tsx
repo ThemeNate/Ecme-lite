@@ -56,7 +56,7 @@ const CoveredLoading = (props: BaseLoadingProps) => {
         <Component className={classNames(loading ? 'relative' : '', className)}>
             {children}
             {loading && (
-                <div className="w-full h-full bg-white dark:bg-gray-800 dark:bg-opacity-60 bg-opacity-50 absolute inset-0" />
+                <div className="w-full h-full bg-white/50 dark:bg-gray-800/60 absolute inset-0" />
             )}
             {loading && (
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">

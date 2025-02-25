@@ -1,4 +1,4 @@
-import { useRef, useImperativeHandle, forwardRef } from 'react'
+import { useRef, useImperativeHandle } from 'react'
 import AuthContext from './AuthContext'
 import appConfig from '@/configs/app.config'
 import { useSessionUser, useToken } from '@/store/authStore'
@@ -13,7 +13,7 @@ import type {
     User,
     Token,
 } from '@/@types/auth'
-import type { ReactNode } from 'react'
+import type { ReactNode, Ref } from 'react'
 import type { NavigateFunction } from 'react-router-dom'
 
 type AuthProviderProps = { children: ReactNode }
@@ -22,21 +22,17 @@ export type IsolatedNavigatorRef = {
     navigate: NavigateFunction
 }
 
-const IsolatedNavigator = forwardRef<IsolatedNavigatorRef>((_, ref) => {
+const IsolatedNavigator = ({ ref }: { ref: Ref<IsolatedNavigatorRef> }) => {
     const navigate = useNavigate()
 
-    useImperativeHandle(
-        ref,
-        () => {
-            return {
-                navigate,
-            }
-        },
-        [navigate],
-    )
+    useImperativeHandle(ref, () => {
+        return {
+            navigate,
+        }
+    }, [navigate])
 
     return <></>
-})
+}
 
 function AuthProvider({ children }: AuthProviderProps) {
     const signedIn = useSessionUser((state) => state.session.signedIn)
@@ -157,7 +153,5 @@ function AuthProvider({ children }: AuthProviderProps) {
         </AuthContext.Provider>
     )
 }
-
-IsolatedNavigator.displayName = 'IsolatedNavigator'
 
 export default AuthProvider

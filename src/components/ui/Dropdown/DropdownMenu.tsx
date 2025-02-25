@@ -2,7 +2,6 @@ import {
     useState,
     useRef,
     useContext,
-    forwardRef,
     useEffect,
     useImperativeHandle,
 } from 'react'
@@ -30,7 +29,7 @@ import {
     useInteractions,
     useListItem,
     useListNavigation,
-useMergeRefs,
+    useMergeRefs,
     useRole,
     useTypeahead,
     useTransitionStyles,
@@ -39,7 +38,7 @@ import type { CommonProps } from '../@types/common'
 import type { DropdownToggleSharedProps } from './DropdownToggle'
 import type { DropdownSubItemSharedProps } from './DropdownSubItem'
 import type { Placement } from '@floating-ui/react'
-import type { HTMLProps, FocusEvent, MouseEvent, ReactNode } from 'react'
+import type { HTMLProps, FocusEvent, MouseEvent, ReactNode, Ref } from 'react'
 
 export interface DropdownMenuProps
     extends CommonProps,
@@ -51,6 +50,7 @@ export interface DropdownMenuProps
     trigger?: 'click' | 'hover' | 'context'
     placement?: Placement
     onOpen?: (bool: boolean) => void
+    ref?: Ref<HTMLElement | DropdownMenuRef>
 }
 
 export type DropdownMenuRef = {
@@ -58,10 +58,7 @@ export type DropdownMenuRef = {
     handleDropdownClose: () => void
 }
 
-const DropdownMenu = forwardRef<
-    HTMLElement | DropdownMenuRef,
-    DropdownMenuProps & HTMLProps<HTMLElement>
->((props, forwardedRef) => {
+const DropdownMenu = (props: DropdownMenuProps & HTMLProps<HTMLElement>) => {
     const {
         children,
         title,
@@ -72,6 +69,7 @@ const DropdownMenu = forwardRef<
         placement,
         trigger = 'click',
         onOpen,
+        ref,
         ...rest
     } = props
 
@@ -215,24 +213,20 @@ const DropdownMenu = forwardRef<
         }
     }, [tree, isOpen, nodeId, parentId])
 
-    const toggleRef = useMergeRefs([refs.setReference, item.ref, forwardedRef])
+    const toggleRef = useMergeRefs([refs.setReference, item.ref, ref])
 
-    useImperativeHandle(
-        forwardedRef,
-        () => {
-            return {
-                handleDropdownOpen: () => {
-                    setIsOpen(true)
-                    onOpen?.(true)
-                },
-                handleDropdownClose: () => {
-                    setIsOpen(false)
-                    onOpen?.(false)
-                },
-            }
-        },
-        [onOpen],
-    )
+    useImperativeHandle(ref, () => {
+        return {
+            handleDropdownOpen: () => {
+                setIsOpen(true)
+                onOpen?.(true)
+            },
+            handleDropdownClose: () => {
+                setIsOpen(false)
+                onOpen?.(false)
+            },
+        }
+    }, [onOpen])
 
     const toggleProps = {
         ...getReferenceProps(
@@ -278,7 +272,7 @@ const DropdownMenu = forwardRef<
                     data-open={isOpen ? '' : undefined}
                     data-nested={''}
                     data-focus-inside={hasFocusInside ? '' : undefined}
-                    className={classNames(toggleClassName, 'outline-none')}
+                    className={classNames(toggleClassName, 'outline-hidden')}
                     {...toggleProps}
                 >
                     <DropdownSubItem>
@@ -308,7 +302,7 @@ const DropdownMenu = forwardRef<
                                     ref={refs.setFloating}
                                     style={floatingStyles}
                                     {...getFloatingProps()}
-                                    className="outline-none z-30"
+                                    className="outline-hidden z-30"
                                 >
                                     <ul
                                         className={classNames(
@@ -327,8 +321,6 @@ const DropdownMenu = forwardRef<
             </MenuContext.Provider>
         </FloatingNode>
     )
-})
-
-DropdownMenu.displayName = 'DropdownMenu'
+}
 
 export default DropdownMenu

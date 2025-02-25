@@ -20,6 +20,8 @@ interface CollapsedItemProps extends CommonProps {
     ) => string
     renderAsIcon?: boolean
     userAuthority: string[]
+    currentKey?: string
+    parentKeys?: string[]
 }
 
 interface DefaultItemProps {
@@ -46,6 +48,7 @@ const CollapsedItem = ({
     onLinkClick,
     userAuthority,
     t,
+    currentKey
 }: CollapsedItemProps) => {
     return (
         <AuthorityCheck userAuthority={userAuthority} authority={nav.authority}>
@@ -57,10 +60,10 @@ const CollapsedItem = ({
                     {children}
                 </Tooltip>
             ) : (
-                <Dropdown.Item>
+                <Dropdown.Item active={currentKey === nav.key}>
                     {nav.path ? (
                         <Link
-                            className="h-full w-full flex items-center outline-none"
+                            className="h-full w-full flex items-center outline-hidden"
                             to={nav.path}
                             target={nav.isExternalLink ? '_blank' : ''}
                             onClick={() =>
@@ -127,11 +130,15 @@ const VerticalSingleMenuItem = ({
     showIcon,
     showTitle,
     t,
+    currentKey,
+    parentKeys
 }: Omit<VerticalMenuItemProps, 'title' | 'translateKey'>) => {
     return (
         <>
             {sideCollapsed ? (
                 <CollapsedItem
+                    currentKey={currentKey}
+                    parentKeys={parentKeys}
                     nav={nav}
                     direction={direction}
                     renderAsIcon={renderAsIcon}
